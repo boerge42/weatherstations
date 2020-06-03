@@ -1,0 +1,14 @@
+# diese Datei in Verzeichnis /etc/systemd/system/ kopieren (als root) und dann:
+#    sudo servicectl enable epd_weather_monitor 
+#    sudo servicectl start epd_weather_monitor
+#
+[Unit]
+Description=weather to e-paper
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/epd_weather_monitor -h 10.1.1.82 -r 600
+
+[Install]
+WantedBy=multi-user.target

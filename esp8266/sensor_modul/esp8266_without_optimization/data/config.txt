@@ -1,0 +1,11 @@
+wlan_ssid=UWE_HOME1
+wlan_pwd=u1504u1504
+hostname=weatherstation
+mqtt_brocker=10.1.1.82
+mqtt_port=1883
+mqtt_user=
+mqtt_pwd=
+mqtt_client_id=weatherstation
+altitude=39.0
+debug=0
+deepsleep_time=120000000
