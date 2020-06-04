@@ -1,6 +1,6 @@
 # Sensor-Modul
 ## Aufbau
-Als zentrale Verarbeitungseinheit wurde ein ESP8266-12 (also ohne Spannungsregler, Serial2USB-Umsetzer etc., wegen deren zusätzlichem/unnötigen Stromverbrauch) verwendet. Folgende Sensoren sind (derzeit) angeschlossen:
+Als zentrale Verarbeitungseinheit wurde ein "nacktes" ESP8266-12 (also <u>ohne</u> Spannungsregler, Serial2USB-Umsetzer etc. --> Vermeidung von unnötigem Stromverbrauch) verwendet. Folgende Sensoren sind (derzeit) angeschlossen:
 
 * TMP36 (Temperatur)
 * SHT15 (Temperatur, Luftfeuchtigkeit)
@@ -15,17 +15,18 @@ Die Firmware liegt in zwei Versionen vor:
 * [unoptimierte Variante](esp8266_without_optimization/) 
 * [optimierte (Stromverbrauch/Verarbeitungzeit) Variante](esp8266_with_optimization/)
 
-Die optimierte Variante arbeitet grob in folgenden Schritten:
+Erstere war die initiale Programmversion, welche dann schrittweise optimiert wurde. Die optimierte Variante arbeitet grob in folgenden Schritten:
 
-* Modul wacht auf...
+* ESP wacht auf...
 * Deaktivierung des Wifi-Moduls
-* Auslesen der letzten Wifi-Konfiguration (Kanal, MAC-Adresse des AP) aus dem RTC des ESP
+* Auslesen der letzten Wifi-Konfiguration (Kanal, MAC-Adresse des AP) aus dem RTC-Speicherbereich des ESP
 * Lesen der Konfiguration (WLAN, IP, MQTT, etc.) aus dem Flash des ESP
 * Initialisierung der Sensoren
 * Auslesen der Sensoren
 * Wifi-Verbindung herstellen (wenn möglich mit letztem bekannten AP und fester IP-Konfiguration; also kein DHCP, was Zeit kostet!)
 * Verbindung zum MQTT-Broker herstellen
 * MQTT-Nachricht mit den Sensorwerten senden
+* Wifi-Verbindungsdaten in den RTC-Speicherbereich sichern
 * ESP für eine definierte Zeit in Tiefschlaf versetzen
 
 Zu Beginn einzelner interessanter Programmabschnitte wird jeweils ein Impuls an einem GPIO-Pin des ESP ausgegeben. Diese Impulse werden vom ![Strommess-Modul](../esp_ammeter/) verarbeitet.
