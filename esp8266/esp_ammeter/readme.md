@@ -11,6 +11,9 @@ Die Verarbeitung und Visualisierung der empfangenen Messreihen erfolgt über ein
 Ampere-Meter auf einem Breadboard aufgebaut:
 ![Alt-Text](../images/ammeter.png)
 
+Skizze Schaltplan:
+![Alt-Text](../images/circuit_ammeter.png)
+
 Screenshot Bedienoberfläche *serial2plot*:
 ![Alt-Text](../images/serial2plot.png)
 

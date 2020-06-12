@@ -41,6 +41,9 @@ Aufbau auf einem Breadboard (Stromversorung noch über den Serial-USB-Wandler...
 ...auf Lochrasterplatine (Stromversorgung über 3 NiMH-Akkus; ungeregelt):
 ![Alt-Text](../images/weatherstation_lochraster.png)
 
+Skizze Schaltplan:
+![Alt-Text](../images/circuit_sensor_modul.png)
+
 ...Diagramme, die u.a den Verlauf der Wachzeiten des ESP8266 aufzeigen:
 ![Alt-Text](../images/esp_data.png)
 
