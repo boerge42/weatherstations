@@ -1,6 +1,6 @@
 # Sensor-Modul
 ## Aufbau
-Als zentrale Verarbeitungseinheit wurde ein "nacktes" ESP8266-12 (also <u>ohne</u> Spannungsregler, Serial2USB-Umsetzer etc. --> Vermeidung von unnötigem Stromverbrauch) verwendet. Folgende Sensoren sind (derzeit) angeschlossen:
+Als zentrale Verarbeitungseinheit wurde ein "nackter" ESP8266-12 (also <u>ohne</u> Spannungsregler, Serial2USB-Umsetzer etc. --> Vermeidung von unnötigem Stromverbrauch) verwendet. Folgende Sensoren sind (derzeit) angeschlossen:
 
 * TMP36 (Temperatur)
 * SHT15 (Temperatur, Luftfeuchtigkeit)
@@ -35,7 +35,7 @@ Zu Beginn einzelner interessanter Programmabschnitte wird jeweils ein Impuls an 
 Die Wachzeit des ESP8266 liegt im Durchschnitt bei knapp 2s. Die konnte vor allem dadurch erreicht werden, dass die Verarbeitungszeiten zum Herstellen einer Wifi-Verbindung minimiert wurden (siehe oben). Da das Wifi-Modem einer der größten Stromverbraucher innerhalb des ESP8266 ist, hat dies auch einen entscheidenden Einfluss auf die Stromaufnahme. Zwei repräsentative Messungen der Stromaufnahme (in mA) über die Zeit (im 1ms-Raster) sind [hier als csv-Datei](../esp_ammeter/data/) zu finden.
 
 ## Bilder
-Aufbau auf einem Breadboard (Stromversorung noch über den Serial-USB-Wandler...):
+Aufbau auf einem Breadboard (Stromversorgung noch über einen Serial-USB-Wandler...):
 ![Alt-Text](../images/weatherstation.png)
 
 ...auf Lochrasterplatine (Stromversorgung über 3 NiMH-Akkus; ungeregelt):
