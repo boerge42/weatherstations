@@ -99,6 +99,7 @@ struct {
   float bh1750_luminosity;
   float tmp36_temperature;
   float vcc;
+  float vbat;
 } sensor_values;
 
 #define DEEPSLEEP_TIME 120e6  // 120s
@@ -156,8 +157,37 @@ float read_vcc_via_ads1115 (void)
   // Vcc liegt an ADC1 an
   int16_t adc = ads.readADC_SingleEnded(1);
   //Serial.printf("--> ADC1 = %i\n", adc);
-  return adc*0.000125;                       // 4.096/2^15
+  return adc*0.000125;                       // 4.096/2^15/1000
 }
+
+/*
+...wir brauchen einen Spannungsteiler, da max. Vcc + 0.3V anliegen
+duerfen! Vcc ist 3.3V (MCP1700-3302). Voll geladene Akkus kommen 
+locker ueber 3.6V...
+// **************************************************************
+float read_vbat_via_ads1115 (void)
+{
+  // 1x Gain (+/- 4.096V --> Aufloesung 2mV)
+  ads.setGain(GAIN_ONE);
+  // Vcc liegt an ADC2 an
+  int16_t adc = ads.readADC_SingleEnded(2);
+  //Serial.printf("--> ADC2 = %i\n", adc);
+  return adc*0.000125;                       // 4.096/2^15/1000
+}
+*/
+
+// **************************************************************
+float read_vbat_via_ads1115 (void)
+{
+  // 2x Gain (+/- 2.048V --> 15Bit-Aufloesung)
+  ads.setGain(GAIN_TWO);
+  // Vcc liegt an ADC2 an
+  int16_t adc = ads.readADC_SingleEnded(2);
+  //Serial.printf("--> ADC2 = %i\n", adc);
+  return adc*3.2*0.0000625;                       // 2048/2^15/1000 * 3.2 (3.2 --> Spannungsteiler)
+}
+
+
 
 // **************************************************************
 // https://github.com/esp8266/Arduino/blob/master/libraries/esp8266/examples/RTCUserMemory/RTCUserMemory.ino
@@ -262,6 +292,7 @@ void sensors_read(void)
   sensor_values.bh1750_luminosity = myLux.getLux();
   sensor_values.tmp36_temperature = tmp36_readTemperatureC_via_ads1115();
   sensor_values.vcc               = read_vcc_via_ads1115();
+  sensor_values.vbat              = read_vbat_via_ads1115();
   // --> delay?
   // Sensoren wieder runterfahren
   myLux.powerOff();               // BH1750
@@ -290,8 +321,8 @@ void mqtt_publish_values(void)
          sensor_values.tmp36_temperature);
   sprintf(bh1750, "\"BH1750\":{\"luminosity\":%.1f}", 
          sensor_values.bh1750_luminosity);
-  sprintf(esp, "\"ESP\":{\"awake_time\":%lu,\"vcc\":%.2f}", 
-         old_awake_time, sensor_values.vcc);
+  sprintf(esp, "\"ESP\":{\"awake_time\":%lu,\"vcc\":%.2f,\"vbat\":%.2f}", 
+         old_awake_time, sensor_values.vcc, sensor_values.vbat);
   sprintf(json, "{%s, %s, %s, %s, %s}", bme280, sht15, tmp36, bh1750, esp);
   if (debug) Serial.println(json);
   // MQTT-Nachricht versenden

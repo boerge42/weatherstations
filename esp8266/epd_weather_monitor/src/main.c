@@ -33,7 +33,7 @@ MQTT-Payload:
 	"SHT15":{"temperature":17.3,"humidity":42.6}, 
 	"TMP36":{"temperature":20.7}, 
 	"BH1750":{"luminosity":76.7}, 
-	"ESP":{"awake_time":1919,"vcc":3.67}
+	"ESP":{"awake_time":1919,"vcc":3.67,"vbat":4.01}
 }
 
 ...run <prog-name> -?

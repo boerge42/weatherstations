@@ -77,6 +77,12 @@ JETSON_DEV:
 	$(CC) $(CFLAGS) $(DEBUG_JETSONI) -c  $(DIR_Config)/sysfs_gpio.c -o $(DIR_BIN)/sysfs_gpio.o $(LIB_JETSONI) $(DEBUG)
 	$(CC) $(CFLAGS) $(DEBUG_JETSONI) -c  $(DIR_Config)/DEV_Config.c -o $(DIR_BIN)/DEV_Config.o $(LIB_JETSONI)  $(DEBUG)
 
+install:
+	strip $(TARGET)
+	cp $(TARGET) /usr/local/bin/
+	chown root:root /usr/local/bin/$(TARGET)
+	chmod 0755 /usr/local/bin/$(TARGET)
+
 clean :
 	rm $(DIR_BIN)/*.* 
 	rm $(TARGET) 
