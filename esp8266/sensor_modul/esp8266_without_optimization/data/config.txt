@@ -1,5 +1,5 @@
-wlan_ssid=UWE_HOME1
-wlan_pwd=u1504u1504
+wlan_ssid=xxxx
+wlan_pwd=yyyy
 hostname=weatherstation
 mqtt_brocker=10.1.1.82
 mqtt_port=1883
